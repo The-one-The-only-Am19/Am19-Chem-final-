@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aspirin Reimagined — IMF Innovation Challenge</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --white: #FAFAF8;
+    --ink: #1A1A18;
+    --ink-muted: #5C5C57;
+    --ink-faint: #9C9C96;
+    --rule: #E2E2DC;
+    --accent: #C74B2A;
+    --accent-light: #F5E8E3;
+    --accent-mid: #E8876A;
+    --blue: #2A5FC7;
+    --blue-light: #E3EBF5;
+    --green: #2A8C5F;
+    --green-light: #E3F3EC;
+    --amber: #B8720A;
+    --amber-light: #F5EDDC;
+    --surface: #F2F2EE;
+    --card: #FFFFFF;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(250,250,248,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+  }
+  .nav-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--ink-muted);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── SECTIONS ── */
+  section { padding: 5rem 2rem; max-width: 860px; margin: 0 auto; }
+  section + section { border-top: 1px solid var(--rule); }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+  }
+  h1 em { font-style: italic; color: var(--accent); }
+
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  p { color: var(--ink-muted); margin-bottom: 1rem; }
+  p:last-child { margin-bottom: 0; }
+
+  .lead {
+    font-size: 1.1rem;
+    color: var(--ink);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-top: none;
+    padding-top: 6rem;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.3rem 0.8rem;
+    border-radius: 2rem;
+    margin-bottom: 1.5rem;
+    width: fit-content;
+  }
+
+  .molecule-display {
+    margin: 2rem 0;
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .mol-formula {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .mol-formula sub { font-size: 1rem; }
+
+  .mol-stats {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .mol-stat {
+    display: flex;
+    flex-direction: column;
+  }
+  .mol-stat-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .mol-stat-label {
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── PROBLEM / SOLUTION CARDS ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 1.5rem;
+  }
+  .card-accent-top {
+    border-top: 3px solid var(--accent);
+  }
+  .card-blue { border-top: 3px solid var(--blue); }
+  .card-green { border-top: 3px solid var(--green); }
+  .card-amber { border-top: 3px solid var(--amber); }
+
+  /* ── IMF SECTION ── */
+  .imf-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  @media (max-width: 640px) { .imf-grid { grid-template-columns: 1fr; } }
+
+  .imf-card {
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 1.5rem;
+    background: var(--card);
+    position: relative;
+    overflow: hidden;
+  }
+  .imf-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+  .imf-hbond::before { background: var(--accent); }
+  .imf-dipole::before { background: var(--blue); }
+  .imf-london::before { background: var(--green); }
+
+  .imf-strength {
+    display: flex;
+    gap: 3px;
+    margin: 0.75rem 0 0.5rem;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--rule);
+  }
+  .dot.filled-red { background: var(--accent); }
+  .dot.filled-blue { background: var(--blue); }
+  .dot.filled-green { background: var(--green); }
+
+  .imf-location {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    background: var(--surface);
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    color: var(--ink-muted);
+    display: inline-block;
+    margin-top: 0.5rem;
+  }
+
+  /* ── INTERACTIVE QUIZ ── */
+  #quiz-section {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 3rem;
+    margin-top: 2rem;
+    border: none;
+  }
+
+  .quiz-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .quiz-progress {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+  }
+
+  .question-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .option-btn {
+    background: var(--card);
+    border: 1.5px solid var(--rule);
+    border-radius: 8px;
+    padding: 0.85rem 1.25rem;
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.92rem;
+    color: var(--ink);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, transform 0.1s;
+    line-height: 1.5;
+  }
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--accent-mid);
+    background: var(--accent-light);
+    transform: translateX(4px);
+  }
+  .option-btn.correct {
+    border-color: var(--green);
+    background: var(--green-light);
+    color: var(--green);
+    font-weight: 600;
+  }
+  .option-btn.wrong {
+    border-color: var(--accent);
+    background: var(--accent-light);
+    color: var(--accent);
+  }
+  .option-btn:disabled { cursor: default; }
+
+  .feedback-box {
+    margin-top: 1.25rem;
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    display: none;
+  }
+  .feedback-box.show { display: block; }
+  .feedback-correct { background: var(--green-light); color: var(--green); border-left: 3px solid var(--green); }
+  .feedback-wrong { background: var(--accent-light); color: var(--accent); border-left: 3px solid var(--accent); }
+
+  .quiz-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1.4rem;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.2s, transform 0.1s;
+    text-decoration: none;
+  }
+  .btn:hover { opacity: 0.85; transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--rule); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  .score-display {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+  }
+
+  /* Quiz results */
+  #quiz-result {
+    display: none;
+    text-align: center;
+    padding: 2rem 0;
+  }
+  .result-score {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3.5rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .result-label {
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── MOLECULE EXPLORER ── */
+  #explorer {
+    margin-top: 2rem;
+  }
+
+  .explorer-tabs {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .tab-btn {
+    padding: 0.45rem 1rem;
+    border-radius: 6px;
+    border: 1.5px solid var(--rule);
+    background: var(--card);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink-muted);
+    transition: all 0.2s;
+  }
+  .tab-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  .explorer-panel {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .explorer-panel.active { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── SVG MOLECULE ── */
+  .molecule-svg-wrap {
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    overflow-x: auto;
+  }
+
+  /* ── PROPERTY TABLE ── */
+  .prop-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  .prop-table th {
+    text-align: left;
+    padding: 0.6rem 0.75rem;
+    background: var(--surface);
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-muted);
+    border-bottom: 2px solid var(--rule);
+  }
+  .prop-table td {
+    padding: 0.7rem 0.75rem;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink-muted);
+    vertical-align: top;
+  }
+  .prop-table td:first-child {
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+  .prop-table tr:last-child td { border-bottom: none; }
+
+  /* ── DESIGN SOLUTION ── */
+  .solution-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .solution-step {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.25rem;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    align-items: flex-start;
+  }
+  .step-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--accent-light);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+  .step-icon.blue { background: var(--blue-light); color: var(--blue); }
+  .step-icon.green { background: var(--green-light); color: var(--green); }
+
+  /* ── COMPARISON CHART ── */
+  .compare-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .compare-row { }
+  .compare-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.4rem;
+  }
+  .compare-name { font-size: 0.85rem; font-weight: 600; color: var(--ink); }
+  .compare-val { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--ink-muted); }
+  .bar-track {
+    height: 10px;
+    background: var(--rule);
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 5px;
+    width: 0;
+    transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .bar-original { background: var(--accent-mid); }
+  .bar-modified { background: var(--blue); }
+
+  .compare-legend {
+    display: flex;
+    gap: 1.25rem;
+    margin-top: 1rem;
+    font-size: 0.78rem;
+    color: var(--ink-muted);
+  }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 0.3rem;
+    vertical-align: middle;
+  }
+
+  /* ── CAREER BADGE ── */
+  .career-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--accent-light);
+    border: 1px solid var(--accent-mid);
+    border-radius: 10px;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  .career-badge-icon {
+    font-size: 1.4rem;
+  }
+  .career-badge-text {
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+  }
+  .career-badge-title {
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--accent);
+    display: block;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 2rem;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── HIGHLIGHT ── */
+  .highlight {
+    background: var(--accent-light);
+    color: var(--accent);
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+    font-weight: 600;
+    font-size: 0.95em;
+  }
+
+  /* Animated bar trigger */
+  .bar-animated .bar-fill { }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="#hero">Aspirin Reimagined</a>
+  <ul class="nav-links">
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#imf">IMF</a></li>
+    <li><a href="#solution">Solution</a></li>
+    <li><a href="#interactive">Quiz</a></li>
+    <li><a href="#data">Data</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-tag">
+    <span>💊</span> IMF Innovation Challenge — Pharmaceutical Scientist
+  </div>
+  <div class="eyebrow">General Chemistry Final Project</div>
+  <h1>How <em>intermolecular forces</em> shape the way aspirin works</h1>
+  <p class="lead">Aspirin has relieved pain for over a century — but its molecular structure creates a real problem: poor water solubility means slow absorption and stomach irritation. This project explores how understanding IMF can guide a chemical redesign that makes aspirin faster and safer.</p>
+
+  <div class="molecule-display">
+    <div class="mol-formula">C<sub>9</sub>H<sub>8</sub>O<sub>4</sub></div>
+    <div class="mol-stats">
+      <div class="mol-stat">
+        <span class="mol-stat-val">180.16 g/mol</span>
+        <span class="mol-stat-label">Molecular weight</span>
+      </div>
+      <div class="mol-stat">
+        <span class="mol-stat-val">135 °C</span>
+        <span class="mol-stat-label">Melting point</span>
+      </div>
+      <div class="mol-stat">
+        <span class="mol-stat-val">~3 g/L</span>
+        <span class="mol-stat-label">Water solubility</span>
+      </div>
+      <div class="mol-stat">
+        <span class="mol-stat-val">~30 min</span>
+        <span class="mol-stat-label">Absorption time</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROBLEM ── -->
+<section id="problem">
+  <div class="eyebrow">Step 2 — The Problem</div>
+  <h2>Why does aspirin absorb so slowly?</h2>
+  <p class="lead">Standard aspirin tablets take 20–30 minutes to be absorbed into the bloodstream — a significant delay in emergencies like heart attacks, where every minute matters.</p>
+
+  <div class="two-col">
+    <div class="card card-accent-top">
+      <h3>The root cause</h3>
+      <p>Aspirin's large nonpolar benzene ring creates strong London dispersion forces between molecules. These forces keep aspirin packed tightly in crystal form, resisting dissolution in water.</p>
+      <p>Meanwhile, aspirin's –COOH group can irritate the stomach lining during the slow dissolving process.</p>
+    </div>
+    <div class="card card-blue">
+      <h3>Why IMF is the key</h3>
+      <p>If we can modify aspirin to increase its polarity and hydrogen bonding capacity, we can break those crystal packing forces more easily — making it dissolve faster and absorb more quickly.</p>
+      <p>This is a direct application of the principle: <span class="highlight">like dissolves like</span>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── IMF SECTION ── -->
+<section id="imf">
+  <div class="eyebrow">Step 3 — The Chemistry</div>
+  <h2>Intermolecular forces in aspirin</h2>
+  <p>Three types of IMF act between aspirin molecules. Their location and strength directly determine how aspirin behaves as a drug.</p>
+
+  <div class="imf-grid">
+    <div class="imf-card imf-hbond">
+      <h3>Hydrogen Bonding</h3>
+      <div class="imf-strength">
+        <div class="dot filled-red"></div>
+        <div class="dot filled-red"></div>
+        <div class="dot filled-red"></div>
+        <div class="dot filled-red"></div>
+        <div class="dot"></div>
+      </div>
+      <p style="font-size:0.85rem;">Strongest IMF in aspirin. The δ+ hydrogen on –OH forms a bond with lone pairs on oxygen atoms of neighboring molecules or water.</p>
+      <span class="imf-location">–COOH group</span>
+    </div>
+
+    <div class="imf-card imf-dipole">
+      <h3>Dipole–Dipole</h3>
+      <div class="imf-strength">
+        <div class="dot filled-blue"></div>
+        <div class="dot filled-blue"></div>
+        <div class="dot filled-blue"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <p style="font-size:0.85rem;">Permanent partial charges (δ− on O, δ+ on C) attract neighboring molecules. Present in both the ester and carboxylic acid groups.</p>
+      <span class="imf-location">C=O and C–O bonds</span>
+    </div>
+
+    <div class="imf-card imf-london">
+      <h3>London Dispersion</h3>
+      <div class="imf-strength">
+        <div class="dot filled-green"></div>
+        <div class="dot filled-green"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <p style="font-size:0.85rem;">Temporary dipoles from electron cloud fluctuations. Weakest per interaction but constant across the entire molecule — especially at the benzene ring.</p>
+      <span class="imf-location">Benzene ring + π–π stacking</span>
+    </div>
+  </div>
+
+  <!-- Explorer tabs -->
+  <div id="explorer" style="margin-top:2.5rem;">
+    <h3 style="margin-bottom:1rem;">Explore each force's effect on properties</h3>
+    <div class="explorer-tabs">
+      <button class="tab-btn active" onclick="showTab('solubility')">Solubility</button>
+      <button class="tab-btn" onclick="showTab('melting')">Melting Point</button>
+      <button class="tab-btn" onclick="showTab('absorption')">Drug Absorption</button>
+    </div>
+
+    <div id="tab-solubility" class="explorer-panel active">
+      <div class="card">
+        <h3>How IMF affects solubility</h3>
+        <p>Water is a highly polar solvent held together by hydrogen bonds. For aspirin to dissolve, water molecules must form stronger attractions with aspirin than aspirin molecules have with each other.</p>
+        <p>The –COOH group <em>helps</em> solubility by hydrogen bonding with water. But the benzene ring <em>resists</em> dissolution — its London dispersion forces prefer nonpolar neighbors. This is why aspirin's water solubility is only about 3 g/L at 25°C, compared to sugar at ~2,000 g/L.</p>
+        <p>Result: <span class="highlight">slow dissolution → slow absorption → delayed pain relief</span></p>
+      </div>
+    </div>
+
+    <div id="tab-melting" class="explorer-panel">
+      <div class="card">
+        <h3>How IMF affects melting point</h3>
+        <p>Aspirin melts at about 135°C — relatively high for a small organic molecule. This is because the combination of hydrogen bonding (at –COOH), dipole-dipole forces (at C=O groups), and π–π stacking between benzene rings creates a well-ordered crystal lattice that requires significant energy to break apart.</p>
+        <p>By comparison, benzene alone (nonpolar, only London dispersion) melts at just 5.5°C. The polar functional groups in aspirin contribute roughly 130°C of additional thermal stability through stronger IMF.</p>
+        <p>Result: <span class="highlight">multiple strong IMF → high melting point → stable solid tablet at room temperature</span></p>
+      </div>
+    </div>
+
+    <div id="tab-absorption" class="explorer-panel">
+      <div class="card">
+        <h3>How IMF affects drug absorption</h3>
+        <p>Drug absorption depends on two competing needs: the molecule must dissolve in water (the body's main transport medium) but also pass through lipid cell membranes (which are nonpolar). This is the classic pharmaceutical solubility–permeability tradeoff.</p>
+        <p>Aspirin's balance of polar groups (–COOH, ester) and its nonpolar benzene ring gives it moderate performance on both axes. Increasing polarity too much would improve solubility but kill membrane permeability. The proposed lysine salt modification targets this tradeoff carefully.</p>
+        <p>Result: <span class="highlight">IMF balance determines both dissolution speed and membrane crossing ability</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SOLUTION ── -->
+<section id="solution">
+  <div class="eyebrow">Step 3 — The Solution</div>
+
+  <div class="career-badge">
+    <span class="career-badge-icon">🔬</span>
+    <div>
+      <span class="career-badge-title">Pharmaceutical Scientist</span>
+      <span class="career-badge-text">Designing aspirin-lysine salt for faster emergency absorption</span>
+    </div>
+  </div>
+
+  <h2>Aspirin-lysine: redesigning the molecule</h2>
+  <p class="lead">The proposed modification converts standard aspirin into its <strong>lysine salt form</strong> — a real pharmaceutical modification already used in injectable aspirin products.</p>
+
+  <div class="solution-steps">
+    <div class="solution-step">
+      <div class="step-icon">01</div>
+      <div>
+        <h3>The modification</h3>
+        <p>React aspirin's –COOH group with the amino acid lysine. This causes the carboxylic acid to ionize: –COOH → –COO⁻. The lysine's positively charged amino group (–NH₃⁺) forms an ionic pair with it.</p>
+      </div>
+    </div>
+    <div class="solution-step">
+      <div class="step-icon blue">02</div>
+      <div>
+        <h3>How it changes IMF</h3>
+        <p>The new ionic bond and additional –NH₃⁺ group massively increases polarity. Ion–dipole interactions with water replace the weaker hydrogen bonding of the –COOH group, dramatically increasing how quickly water can surround and dissolve the molecule.</p>
+      </div>
+    </div>
+    <div class="solution-step">
+      <div class="step-icon green">03</div>
+      <div>
+        <h3>Effect on properties</h3>
+        <p>Solubility increases roughly 5–10×. This means the drug can be formulated as an injectable solution or fast-dissolving powder — getting into the bloodstream in under 5 minutes instead of 30. The core acetyl group is untouched, so COX enzyme inhibition (the mechanism of pain relief) is fully preserved.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DATA / COMPARISON ── -->
+<section id="data">
+  <div class="eyebrow">Step 5 — Technology & Data</div>
+  <h2>Comparing the molecules</h2>
+  <p>The bar chart below compares key properties of standard aspirin vs. aspirin-lysine salt. Click "Animate" to see the comparison.</p>
+
+  <div style="margin-top:1.5rem; display:flex; justify-content:flex-end;">
+    <button class="btn btn-primary" onclick="animateBars()">▶ Animate comparison</button>
+  </div>
+
+  <div class="compare-bars" id="compareChart">
+
+    <div class="compare-row">
+      <div class="compare-label">
+        <span class="compare-name">Water solubility</span>
+        <span class="compare-val">~3 g/L → ~25 g/L</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill bar-original" id="bar-sol-orig" style="width:0%;"></div>
+      </div>
+      <div class="bar-track" style="margin-top:4px;">
+        <div class="bar-fill bar-modified" id="bar-sol-mod" style="width:0%;"></div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="compare-label">
+        <span class="compare-name">Absorption speed</span>
+        <span class="compare-val">~30 min → ~5 min</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill bar-original" id="bar-abs-orig" style="width:0%;"></div>
+      </div>
+      <div class="bar-track" style="margin-top:4px;">
+        <div class="bar-fill bar-modified" id="bar-abs-mod" style="width:0%;"></div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="compare-label">
+        <span class="compare-name">Stomach irritation risk</span>
+        <span class="compare-val">High → Low</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill bar-original" id="bar-irr-orig" style="width:0%;"></div>
+      </div>
+      <div class="bar-track" style="margin-top:4px;">
+        <div class="bar-fill bar-modified" id="bar-irr-mod" style="width:0%;"></div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="compare-label">
+        <span class="compare-name">Polarity (IMF strength)</span>
+        <span class="compare-val">Moderate → High</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill bar-original" id="bar-pol-orig" style="width:0%;"></div>
+      </div>
+      <div class="bar-track" style="margin-top:4px;">
+        <div class="bar-fill bar-modified" id="bar-pol-mod" style="width:0%;"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="compare-legend">
+    <span><span class="legend-dot" style="background:var(--accent-mid)"></span>Standard aspirin</span>
+    <span><span class="legend-dot" style="background:var(--blue)"></span>Aspirin-lysine (modified)</span>
+  </div>
+
+  <!-- Property table -->
+  <div style="margin-top:3rem;">
+    <h3 style="margin-bottom:1rem;">Full property comparison table</h3>
+    <table class="prop-table">
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>Standard Aspirin</th>
+          <th>Aspirin-Lysine</th>
+          <th>Why it changes (IMF reason)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Water solubility</td>
+          <td>~3 g/L</td>
+          <td>~25 g/L</td>
+          <td>Ion–dipole forces replace H-bonding; ionic –COO⁻ attracts water strongly</td>
+        </tr>
+        <tr>
+          <td>Absorption time</td>
+          <td>~20–30 min</td>
+          <td>~5 min</td>
+          <td>Faster dissolution → faster diffusion into bloodstream</td>
+        </tr>
+        <tr>
+          <td>Stomach irritation</td>
+          <td>High</td>
+          <td>Low</td>
+          <td>Faster dissolving = less contact time with stomach lining</td>
+        </tr>
+        <tr>
+          <td>Dominant IMF</td>
+          <td>H-bonding + π–π stacking</td>
+          <td>Ionic + H-bonding</td>
+          <td>–COO⁻/–NH₃⁺ ion pair is stronger than H-bonds alone</td>
+        </tr>
+        <tr>
+          <td>Melting point</td>
+          <td>135°C</td>
+          <td>Higher (~200°C)</td>
+          <td>Stronger ionic forces in crystal require more energy to break</td>
+        </tr>
+        <tr>
+          <td>Pain relief mechanism</td>
+          <td>COX inhibition (acetyl)</td>
+          <td>COX inhibition (acetyl)</td>
+          <td>Unchanged — acetyl group is not modified</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── INTERACTIVE QUIZ ── -->
+<section id="interactive" style="max-width:860px; margin:0 auto; padding:5rem 2rem;">
+  <div class="eyebrow">Step 6 — Interactive Element</div>
+  <h2>Test your understanding</h2>
+  <p>Answer these questions about IMF and aspirin. Each question has an explanation to help you learn.</p>
+
+  <div id="quiz-section">
+    <div id="quiz-content">
+      <div class="quiz-header">
+        <span class="quiz-progress" id="quiz-progress">Question 1 of 6</span>
+        <span class="score-display" id="quiz-score">Score: 0 / 0</span>
+      </div>
+      <div class="question-text" id="question-text"></div>
+      <div class="options" id="options-container"></div>
+      <div class="feedback-box" id="feedback-box"></div>
+      <div class="quiz-nav">
+        <button class="btn btn-outline" id="prev-btn" onclick="prevQuestion()" disabled>← Previous</button>
+        <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" disabled>Next →</button>
+      </div>
+    </div>
+
+    <div id="quiz-result">
+      <div class="result-score" id="result-score"></div>
+      <div class="result-label">Final Score</div>
+      <p id="result-msg"></p>
+      <button class="btn btn-primary" onclick="restartQuiz()" style="margin-top:1rem;">Retake quiz</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  General Chemistry — IMF Innovation Challenge &nbsp;·&nbsp; Pharmaceutical Scientist track &nbsp;·&nbsp; Aspirin Reimagined
+</footer>
+
+<script>
+  // ── QUIZ DATA ──
+  const questions = [
+    {
+      q: "Which intermolecular force is responsible for aspirin's ability to dissolve in water at all?",
+      options: [
+        "London dispersion forces from the benzene ring",
+        "Hydrogen bonding from the –OH group in –COOH",
+        "Metallic bonding between carbon atoms",
+        "Ionic bonding between the ester and acid groups"
+      ],
+      correct: 1,
+      feedback: "Correct! The –OH hydrogen in aspirin's carboxylic acid group carries a partial positive charge (δ+) and can hydrogen bond with water's lone pair electrons, allowing some water solubility. The nonpolar benzene ring actually limits this."
+    },
+    {
+      q: "Why does aspirin have a higher melting point (~135°C) than benzene (5.5°C) despite both containing a benzene ring?",
+      options: [
+        "Aspirin is heavier, and mass always increases melting point",
+        "Aspirin's polar functional groups create stronger IMF (H-bonding, dipole-dipole) that hold the crystal together more tightly",
+        "The benzene ring in aspirin is more strongly bonded than in pure benzene",
+        "Aspirin has metallic bonds that raise the melting point"
+      ],
+      correct: 1,
+      feedback: "Exactly right! Aspirin's –COOH and ester groups add strong hydrogen bonding and dipole-dipole forces on top of the London dispersion forces that both molecules share. These extra forces make the crystal much harder to break apart, requiring far more heat."
+    },
+    {
+      q: "In aspirin, which atoms carry a partial negative charge (δ−) and why?",
+      options: [
+        "Carbon atoms, because they are the backbone of the molecule",
+        "Hydrogen atoms, because they are small and pull electrons",
+        "Oxygen atoms, because oxygen is highly electronegative compared to carbon and hydrogen",
+        "The benzene ring carbons, due to aromaticity"
+      ],
+      correct: 2,
+      feedback: "Correct! Electronegativity is the key concept here. Oxygen (EN = 3.44) is much more electronegative than carbon (2.55) or hydrogen (2.20), so in every C=O and O–H bond, the electron density shifts toward oxygen, creating δ− on O and δ+ on C or H."
+    },
+    {
+      q: "The aspirin-lysine modification converts –COOH to –COO⁻. How does this improve water solubility?",
+      options: [
+        "It removes the benzene ring, eliminating London dispersion forces",
+        "The ionized –COO⁻ creates stronger ion–dipole interactions with water, which are stronger than the original hydrogen bonds",
+        "It adds more carbon atoms, making the molecule larger",
+        "It replaces the ester group with a metallic bond"
+      ],
+      correct: 1,
+      feedback: "Great reasoning! Ion–dipole interactions (between –COO⁻ and water's δ+ hydrogen) are stronger than regular hydrogen bonds. Water surrounds the charged group much more effectively, pulling the molecule into solution much faster. This is why the solubility jumps from ~3 g/L to ~25 g/L."
+    },
+    {
+      q: "Which principle best explains why aspirin dissolves better in slightly basic conditions (like the small intestine) than in stomach acid?",
+      options: [
+        "Temperature is higher in the intestine",
+        "In basic conditions, –COOH ionizes to –COO⁻, making the molecule more polar and increasing water affinity (like dissolves like)",
+        "The intestine contains more surface area",
+        "Aspirin reacts chemically with the intestine walls"
+      ],
+      correct: 1,
+      feedback: "Excellent! 'Like dissolves like' is the IMF principle at work. In the basic environment of the small intestine, the –COOH group loses its proton and becomes –COO⁻ (an anion). This charged, polar form is much more attracted to the polar water environment — exactly the same principle behind the lysine salt modification."
+    },
+    {
+      q: "π–π stacking between aspirin's benzene rings is an example of which intermolecular force?",
+      options: [
+        "Hydrogen bonding",
+        "Ionic bonding",
+        "London dispersion forces / induced dipole interactions",
+        "Covalent bonding"
+      ],
+      correct: 2,
+      feedback: "Correct! π–π stacking is a special case of London dispersion forces where the large, flat electron clouds of adjacent aromatic rings create attractive temporary dipoles. This force is why aspirin forms a well-packed crystal at room temperature and contributes to its relatively high melting point."
+    }
+  ];
+
+  let currentQ = 0;
+  let answered = [];
+  let score = 0;
+
+  function renderQuestion() {
+    const q = questions[currentQ];
+    document.getElementById('question-text').textContent = q.q;
+    document.getElementById('quiz-progress').textContent = `Question ${currentQ + 1} of ${questions.length}`;
+
+    const container = document.getElementById('options-container');
+    container.innerHTML = '';
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.textContent = opt;
+      btn.onclick = () => selectAnswer(i);
+      if (answered[currentQ] !== undefined) {
+        btn.disabled = true;
+        if (i === q.correct) btn.classList.add('correct');
+        else if (i === answered[currentQ]) btn.classList.add('wrong');
+      }
+      container.appendChild(btn);
+    });
+
+    const fb = document.getElementById('feedback-box');
+    if (answered[currentQ] !== undefined) {
+      const correct = answered[currentQ] === q.correct;
+      fb.textContent = q.feedback;
+      fb.className = `feedback-box show ${correct ? 'feedback-correct' : 'feedback-wrong'}`;
+    } else {
+      fb.className = 'feedback-box';
+    }
+
+    document.getElementById('prev-btn').disabled = currentQ === 0;
+    document.getElementById('next-btn').disabled = answered[currentQ] === undefined;
+
+    if (currentQ === questions.length - 1 && answered[currentQ] !== undefined) {
+      document.getElementById('next-btn').textContent = 'See results →';
+    } else {
+      document.getElementById('next-btn').textContent = 'Next →';
+    }
+
+    document.getElementById('quiz-score').textContent = `Score: ${score} / ${answered.filter(a => a !== undefined).length}`;
+  }
+
+  function selectAnswer(i) {
+    if (answered[currentQ] !== undefined) return;
+    answered[currentQ] = i;
+    const q = questions[currentQ];
+    if (i === q.correct) score++;
+    renderQuestion();
+    document.getElementById('next-btn').disabled = false;
+  }
+
+  function nextQuestion() {
+    if (currentQ === questions.length - 1) {
+      showResult();
+    } else {
+      currentQ++;
+      renderQuestion();
+    }
+  }
+
+  function prevQuestion() {
+    if (currentQ > 0) { currentQ--; renderQuestion(); }
+  }
+
+  function showResult() {
+    document.getElementById('quiz-content').style.display = 'none';
+    document.getElementById('quiz-result').style.display = 'block';
+    const pct = Math.round((score / questions.length) * 100);
+    document.getElementById('result-score').textContent = `${score} / ${questions.length}`;
+    const msgs = [
+      "Keep reviewing the IMF concepts — re-read the sections above and try again!",
+      "Good effort! Review the feedback on any questions you missed.",
+      "Solid understanding! You've got the core IMF concepts down.",
+      "Excellent work! You clearly understand how IMF shapes aspirin's properties."
+    ];
+    const msgIdx = pct < 50 ? 0 : pct < 70 ? 1 : pct < 90 ? 2 : 3;
+    document.getElementById('result-msg').textContent = msgs[msgIdx];
+  }
+
+  function restartQuiz() {
+    currentQ = 0; answered = []; score = 0;
+    document.getElementById('quiz-content').style.display = 'block';
+    document.getElementById('quiz-result').style.display = 'none';
+    renderQuestion();
+  }
+
+  // ── TABS ──
+  function showTab(id) {
+    document.querySelectorAll('.explorer-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // ── BARS ──
+  function animateBars() {
+    // [original%, modified%]
+    const data = {
+      'sol': [15, 85],
+      'abs': [78, 18],   // absorption TIME — lower is better, so original is "high bar" here
+      'irr': [82, 22],
+      'pol': [42, 90]
+    };
+    Object.entries(data).forEach(([key, [orig, mod]]) => {
+      setTimeout(() => {
+        document.getElementById(`bar-${key}-orig`).style.width = orig + '%';
+        document.getElementById(`bar-${key}-mod`).style.width = mod + '%';
+      }, 200);
+    });
+  }
+
+  // Init quiz
+  renderQuestion();
+</script>
+</body>
+</html>
